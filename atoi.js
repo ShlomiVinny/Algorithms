@@ -20,15 +20,21 @@ Do not ignore any characters other than the leading whitespace or the rest of th
  */
 var myAtoi = function(s) {
     s = s.trimStart(); // Step 1: remove/ignore whitespace at the start of the input string
-    let digits = {};
+    
+    let digits = {}; // create an empty digits object
+    
     for (let i = 0; i < 10; i++) { // create a dictionary of {'n':n} of all the digits from 0-9
-        let a = new String(i);
+        
+        let a = new String(i); // make a new String object with <i> as the value
+        
         digits[a.valueOf()] = i;
+        // the call: Object[String: [key]] looks for a key that matches the passed string, if it doesnt find any, it makes a new object entry
+        // with the passed string as the key and i as the value which translates to {'i': i} for all the number from 0-9
     }
 
     let last = false; // indicates the last itteration
     let answer = 0; // answer: Number
-    let intSign = ''; // integer sign
+    let intSign = ''; // integer sign, if the sign is either '+' or there is no sign, return a positive integer
 
     for (let i = 0; i < s.length; i++) { // looop through s
         let char = s.charAt(i); // get the char at index i
@@ -36,10 +42,12 @@ var myAtoi = function(s) {
             intSign = char;
             continue;
         }
+        
         if (digits[s.charAt(i + 1)] === undefined || i === s.length - 1) { // Step 3
             // if the next char is not a digit or its the last index, this is the last itteration
             last = true;
         }
+        
         // Step 4
         if (digits[char] !== undefined) { // if the char is a digit, return its value from the dictionary 
             answer = answer + digits[char]; // add the char value: Number to answer: Number
@@ -61,5 +69,5 @@ var myAtoi = function(s) {
     if (answer <= lowerLimit) return lowerLimit;
     if (answer >= upperLimit) return upperLimit;
 
-    if (lowerLimit <= answer <= upperLimit) return answer; // Step 6
+    if (lowerLimit <= answer <= upperLimit) return answer;
 };
