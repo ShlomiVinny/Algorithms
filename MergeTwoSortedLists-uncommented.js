@@ -13,37 +13,37 @@
  * return {ListNode}
  */
 var mergeTwoLists = function(list1, list2) {
-    if (list1 === null && list2 === null) {
+    if (list1 === null && list2 === null) { // if the lists are empty, return null or one of the empty lists
         return list1;
     }
 
-    let arr = [];
-
-    function compareNumbers(a, b) {
-        return a - b;
+    let arr = []; // this is the array that will accept all the values from both lists
+    
+    function compareNumbers(a, b) { // compare function to use with Array.sort() as a callback function
+        return a - b;  // this will sort the array in an ascending order
     }
 
-    function listToArr(list) {
+    function listToArr(list) { // function to turn a singly linked lists into an array
         while (list) {
-            let val = list.val;
-            arr.push(val);
-            list = list.next;
+            let val = list.val; // get a value
+            arr.push(val); // push it into arr[]
+            list = list.next; // jump to the next node
         }
     }
 
-    function arrToLinkedList(arr) {
-        let val = arr.shift();
-        let list = new ListNode(val);
-        let currNode = list;
-        while (arr.length > 0) {
-            let node = new ListNode();
-            node.val = arr.shift();
-            currNode.next = node;
-            currNode = node;
+    function arrToLinkedList(arr) { // function to turn an array into a singly linked list
+        let val = arr.shift(); // get the first value from the array, shift is destructive
+        let list = new ListNode(val); // make a new list and init it with the first value from arr[]
+        let currNode = list; 
+        while (arr.length > 0) { // while the array is not empty
+            let node = new ListNode(); // make a new node
+            node.val = arr.shift(); // assign a value to the new node, again the first value from arr[]
+            currNode.next = node; // link the node to the list
+            currNode = node; // make the new node (which is also the last one in the list) the current node
         }
         return list;
     }
-
+    // function calls:
     listToArr(list1);
     listToArr(list2);
     arr.sort(compareNumbers);
